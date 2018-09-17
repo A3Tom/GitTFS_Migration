@@ -49,11 +49,18 @@
     <Compile Include="Classes\App.cs" />
     <Compile Include="Classes\FileSelector.cs" />
     <Compile Include="Classes\FileReader.cs" />
+    <Compile Include="Classes\RepositoryValidator.cs" />
     <Compile Include="Interfaces\IApp.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IFileSelector.cs" />
+    <Compile Include="Interfaces\IRepositoryValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GitTFS_Migration.Domain\GitTFS_Migration.Domain.csproj">
+      <Project>{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}</Project>
+      <Name>GitTFS_Migration.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

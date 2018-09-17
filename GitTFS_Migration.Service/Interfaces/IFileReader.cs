@@ -4,6 +4,6 @@ namespace GitTFS_Migration.Service.Interfaces
 {
     public interface IFileReader
     {
-        DataTable ParseCSVToDataTable(string filePath, DataColumn[] dataColumns = null);
+        DataTable ParseCSVToDataTable(string filePath, DataTable dataTable = null);
     }
 }

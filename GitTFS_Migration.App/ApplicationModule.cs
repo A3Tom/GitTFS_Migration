@@ -1,9 +1,9 @@
-﻿using GitTFS_Migration.Domain.Interfaces;
-using GitTFS_Migration.Domain.Classes;
+﻿using GitTFS_Migration.Domain.Classes;
+using GitTFS_Migration.Domain.Interfaces;
+using GitTFS_Migration.Service.Classes;
+using GitTFS_Migration.Service.Interfaces;
 using Ninject.Modules;
 using NLog;
-using GitTFS_Migration.Service.Interfaces;
-using GitTFS_Migration.Service.Classes;
 
 namespace GitTFS_Migration.Application
 {
@@ -24,6 +24,18 @@ namespace GitTFS_Migration.Application
                 .InSingletonScope();
 
             Bind(typeof(IFileSelector)).To(typeof(FileSelector))
+                .InTransientScope();
+
+            Bind(typeof(IFileReader)).To(typeof(FileReader))
+                .InTransientScope();
+
+            Bind(typeof(IRepositoryValidator)).To(typeof(RepositoryValidator))
+                .InTransientScope();
+
+            Bind(typeof(IGitTFSCommandLibraryFactory)).To(typeof(GitTFSCommandLibraryFactory))
+                .InTransientScope();
+
+            Bind(typeof(IMigrationDGVFactory)).To(typeof(MigrationDGVFactory))
                 .InTransientScope();
 
             #endregion

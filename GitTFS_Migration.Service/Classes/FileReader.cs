@@ -1,27 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using GitTFS_Migration.Domain.DataModels;
+using GitTFS_Migration.Domain.Enums;
+using GitTFS_Migration.Domain.Interfaces;
+using GitTFS_Migration.Service.Interfaces;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using GitTFS_Migration.Service.Interfaces;
 
 namespace GitTFS_Migration.Service.Classes
 {
     public class FileReader : IFileReader
     {
-        public DataTable ParseCSVToDataTable(string filePath, DataColumn[] dataColumns = null)
-        {
-            DataTable result = new DataTable();
+        private readonly IRepositoryValidator _repositoryValidator;
+        private readonly IMigrationDGVFactory _migrationDGVFactory;
 
-            List<string[]> rows = File.ReadAllLines(filePath)
-                .Select(x => x.Split(','))
+        private DataColumn[] _dataColumns = null;
+
+        public FileReader(IRepositoryValidator repositoryValidator,
+            IMigrationDGVFactory migrationDGVFactory)
+        {
+            _repositoryValidator = repositoryValidator;
+            _migrationDGVFactory = migrationDGVFactory;
+        }
+
+        public DataTable ParseCSVToDataTable(string filePath, DataTable dataTable = null)
+        {
+            List<GitMigrationRow> rows = File.ReadAllLines(filePath)
+                .Select(x => new GitMigrationRow(x.Split(',')))
                 .ToList();
 
-            if (dataColumns != null)
-                result.Columns.AddRange(dataColumns);
+            if (dataTable == null)
+            {
+                dataTable = new DataTable();
 
-            rows.ForEach(repository => result.Rows.Add(repository));
+                _dataColumns = _migrationDGVFactory.GenerateMigrationHeaderRow();
+                dataTable.Columns.AddRange(_dataColumns);
+            }
+            else
+            {
+                dataTable.Clear();
+            }
 
-            return result;
+            foreach (GitMigrationRow row in rows)
+            {
+                //Make Async calls & run in parallel
+                row.OldTFSRepositoryValid = _repositoryValidator.ValidateRepository(RepositoryTypeEnum.TFS, row.OldTFSRepository);
+                row.NewGitRepositoryValid = _repositoryValidator.ValidateRepository(RepositoryTypeEnum.Git, row.NewGitRepository);
+
+                dataTable.Rows.Add(
+                    row.BranchName,
+                    row.OldTFSRepository,
+                    row.OldTFSRepositoryValid,
+                    row.NewGitRepository,
+                    row.NewGitRepositoryValid
+                    );
+            }
+
+            return dataTable;
         }
     }
 }

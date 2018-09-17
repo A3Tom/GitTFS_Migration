@@ -1,4 +1,5 @@
-﻿using GitTFS_Migration.Service.Interfaces;
+﻿using GitTFS_Migration.Domain.Interfaces;
+using GitTFS_Migration.Service.Interfaces;
 using System;
 using System.Data;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace GitTFS_Migration.Application
         private readonly IFileSelector _fileSelector;
         private readonly IFileReader _fileReader;
 
-        private DataColumn[] _dataColumns = null;
+        private DataTable _dataTable = null;
+        
         private string _csvFileLocation;
 
         public MainForm(IFileSelector fileSelector,
@@ -19,12 +21,8 @@ namespace GitTFS_Migration.Application
         {
             _fileSelector = fileSelector;
             _fileReader = fileReader;
-            InitializeComponent();
 
-            _dataColumns = dgv_Repos.Columns
-                .Cast<DataGridViewColumn>()
-                .Select(x => new DataColumn(x.Name))
-                .ToArray();
+            InitializeComponent();
         }
 
         private void btn_SelectCSV_Click(object sender, EventArgs e)
@@ -32,8 +30,13 @@ namespace GitTFS_Migration.Application
             _csvFileLocation = _fileSelector.SelectFile(ofd_Migrations);
             txt_CSVLocation.Text = _csvFileLocation;
 
-            var dt = _fileReader.ParseCSVToDataTable(_csvFileLocation, _dataColumns);
-            dgv_Repos.DataSource = dt;
+            _dataTable = _fileReader.ParseCSVToDataTable(_csvFileLocation, _dataTable);
+            dgv_Repos.DataSource = _dataTable;
+        }
+
+        private void btn_Clear_Click(object sender, EventArgs e)
+        {
+            dgv_Repos.DataSource = null;
         }
     }
 }

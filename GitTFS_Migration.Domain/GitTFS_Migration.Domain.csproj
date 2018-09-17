@@ -40,6 +40,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GitTFSCommandLibraryFactory.cs" />
     <Compile Include="Classes\Log.cs" />
+    <Compile Include="Classes\MigrationDGVFactory.cs" />
+    <Compile Include="DataModels\GitMigrationRow.cs" />
+    <Compile Include="Enums\GitTFSCommandsEnum.cs" />
+    <Compile Include="Enums\RepositoryTypeEnum.cs" />
+    <Compile Include="Interfaces\IGitTFSCommandLibraryFactory.cs" />
     <Compile Include="Interfaces\ILog.cs" />
+    <Compile Include="Interfaces\IMigrationDGVFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
