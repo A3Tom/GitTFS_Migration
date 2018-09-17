@@ -1,9 +1,10 @@
-﻿using System.Data;
+﻿using GitTFS_Migration.Domain.DataModels;
+using System.Collections.Generic;
 
 namespace GitTFS_Migration.Service.Interfaces
 {
     public interface IFileReader
     {
-        DataTable ParseCSVToDataTable(string filePath, DataTable dataTable = null);
+        List<GitMigrationRow> ParseCSVToList(string filePath);
     }
 }

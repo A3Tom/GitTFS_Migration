@@ -1,4 +1,5 @@
-﻿using GitTFS_Migration.Domain.Enums;
+﻿using GitTFS_Migration.Domain.DataModels;
+using GitTFS_Migration.Domain.Enums;
 using GitTFS_Migration.Domain.Interfaces;
 using System.Collections.Generic;
 
@@ -10,28 +11,35 @@ namespace GitTFS_Migration.Domain.Classes
 
         private Dictionary<GitTFSCommandsEnum, string> _gitTFSCommandKVP;
 
-        public Dictionary<GitTFSCommandsEnum, string> GenerateGitTFSCommandDictionary(string tfsRepositoryPath, string gitRepositoryPath)
+        public Dictionary<GitTFSCommandsEnum, string> GenerateGitTFSCommandDictionary(GitMigrationRow migrationRow)
         {
-            _gitTFSCommandKVP = new Dictionary<GitTFSCommandsEnum, string>();
+            _gitTFSCommandKVP = new Dictionary<GitTFSCommandsEnum, string>
+            {
+                {
+                    GitTFSCommandsEnum.CloneFromTFS,
+                    $"git tfs clone {TFS_SERVER} \"{migrationRow.OldTFSRepository}\" {migrationRow.BranchName} --branches=none"
+                },
 
-            _gitTFSCommandKVP.Add(
-                GitTFSCommandsEnum.CloneFromTFS,
-                $"git tfs clone {TFS_SERVER} \"{tfsRepositoryPath}\" --branches=none"
-            );
-            _gitTFSCommandKVP.Add(
-                GitTFSCommandsEnum.AddOriginRemote,
-                $"git remote add origin {gitRepositoryPath}"
-            );
+                {
+                    GitTFSCommandsEnum.AddOriginRemote,
+                    $"git remote add origin {migrationRow.NewGitRepository}"
+                },
 
-            _gitTFSCommandKVP.Add(
-                GitTFSCommandsEnum.GenerateDevelopBranch, 
-                $"git checkout -b develop"
-            );
+                {
+                    GitTFSCommandsEnum.ChangeDirectory,
+                    $"cd {migrationRow.BranchName}"
+                },
 
-            _gitTFSCommandKVP.Add(
-                GitTFSCommandsEnum.PushOriginRemote, 
-                $"git push -u origin --all"
-            );
+                {
+                    GitTFSCommandsEnum.GenerateDevelopBranch,
+                    $"git checkout -b develop"
+                },
+
+                {
+                    GitTFSCommandsEnum.PushOriginRemote,
+                    $"git push -u origin --all"
+                }
+            };
 
             return _gitTFSCommandKVP;
         }

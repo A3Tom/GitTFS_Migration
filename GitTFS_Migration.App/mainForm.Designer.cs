@@ -56,6 +56,7 @@
             this.btn_Migrate.TabIndex = 1;
             this.btn_Migrate.Text = "Migrate";
             this.btn_Migrate.UseVisualStyleBackColor = true;
+            this.btn_Migrate.Click += new System.EventHandler(this.btn_Migrate_Click);
             // 
             // ofd_Migrations
             // 

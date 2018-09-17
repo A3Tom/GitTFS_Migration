@@ -4,7 +4,8 @@
     {
         CloneFromTFS = 1,
         AddOriginRemote = 2,
-        GenerateDevelopBranch = 3,
-        PushOriginRemote = 4
+        ChangeDirectory = 3,
+        GenerateDevelopBranch = 4,
+        PushOriginRemote = 5
     }
 }

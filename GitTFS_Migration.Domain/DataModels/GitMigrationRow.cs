@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace GitTFS_Migration.Domain.DataModels
+﻿namespace GitTFS_Migration.Domain.DataModels
 {
     public class GitMigrationRow
     {
@@ -27,5 +25,14 @@ namespace GitTFS_Migration.Domain.DataModels
         public bool NewGitRepositoryValid { get; set; }
 
         public bool EligableForMigration => OldTFSRepositoryValid && NewGitRepositoryValid;
+
+        public bool ValidateRow()
+        {
+            return
+                !string.IsNullOrEmpty(BranchName) &&
+                !string.IsNullOrEmpty(OldTFSRepository) &&
+                !string.IsNullOrEmpty(NewGitRepository) &&
+                EligableForMigration;
+        }
     }
 }
