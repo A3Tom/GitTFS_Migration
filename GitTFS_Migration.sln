@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTFS_Migration.Application", "GitTFS_Migration.App\GitTFS_Migration.Application.csproj", "{21D8CB7A-5C85-429B-B84E-E081B8D72D70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTFS_Migration.Service", "GitTFS_Migration.Service\GitTFS_Migration.Service.csproj", "{7EDCB877-9584-450C-BBF4-994E36F5E885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTFS_Migration.Domain", "GitTFS_Migration.Domain\GitTFS_Migration.Domain.csproj", "{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21D8CB7A-5C85-429B-B84E-E081B8D72D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D8CB7A-5C85-429B-B84E-E081B8D72D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D8CB7A-5C85-429B-B84E-E081B8D72D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D8CB7A-5C85-429B-B84E-E081B8D72D70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDCB877-9584-450C-BBF4-994E36F5E885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDCB877-9584-450C-BBF4-994E36F5E885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDCB877-9584-450C-BBF4-994E36F5E885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDCB877-9584-450C-BBF4-994E36F5E885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E92ED59-7884-49F2-A7D4-EFDDDBD74DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {191C9D43-94F7-4D54-8E0F-1A9EBD6D1CFB}
+	EndGlobalSection
+EndGlobal
