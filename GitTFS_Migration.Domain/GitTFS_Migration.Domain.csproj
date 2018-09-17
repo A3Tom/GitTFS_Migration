@@ -49,15 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\GitTFSCommandLibraryFactory.cs" />
+    <Compile Include="Classes\CommandLibraryFactory.cs" />
     <Compile Include="Classes\Log.cs" />
     <Compile Include="Classes\MigrationDGVFactory.cs" />
+    <Compile Include="Classes\ProcessFactory.cs" />
     <Compile Include="DataModels\GitMigrationRow.cs" />
     <Compile Include="Enums\GitTFSCommandsEnum.cs" />
     <Compile Include="Enums\RepositoryTypeEnum.cs" />
-    <Compile Include="Interfaces\IGitTFSCommandLibraryFactory.cs" />
+    <Compile Include="Interfaces\ICommandLibraryFactory.cs" />
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Interfaces\IMigrationDGVFactory.cs" />
+    <Compile Include="Interfaces\IProcessFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

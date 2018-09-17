@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GitTFS_Migration.Domain.Classes
 {
-    public class GitTFSCommandLibraryFactory : IGitTFSCommandLibraryFactory
+    public class CommandLibraryFactory : ICommandLibraryFactory
     {
         private const string TFS_SERVER = @"http://i-t-v-tf01.amorgroup.local:8080/tfs";
 

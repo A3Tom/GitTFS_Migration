@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GitTFS_Migration.Domain.Interfaces
 {
-    public interface IGitTFSCommandLibraryFactory
+    public interface ICommandLibraryFactory
     {
         Dictionary<GitTFSCommandsEnum, string> GenerateGitTFSCommandDictionary(GitMigrationRow migrationRow);
     }

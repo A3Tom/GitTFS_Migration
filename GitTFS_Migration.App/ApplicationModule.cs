@@ -32,7 +32,7 @@ namespace GitTFS_Migration.Application
             Bind(typeof(IRepositoryValidator)).To(typeof(RepositoryValidator))
                 .InTransientScope();
 
-            Bind(typeof(IGitTFSCommandLibraryFactory)).To(typeof(GitTFSCommandLibraryFactory))
+            Bind(typeof(ICommandLibraryFactory)).To(typeof(CommandLibraryFactory))
                 .InTransientScope();
 
             Bind(typeof(IMigrationDGVFactory)).To(typeof(MigrationDGVFactory))
