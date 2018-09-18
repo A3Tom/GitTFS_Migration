@@ -31,6 +31,7 @@ namespace GitTFS_Migration.Application
             _migrationDGVFactory = migrationDGVFactory;
 
             InitializeComponent();
+            dgv_Repos.ReadOnly = true;
         }
 
         private void btn_SelectCSV_Click(object sender, EventArgs e)
@@ -42,6 +43,7 @@ namespace GitTFS_Migration.Application
             _dataTable = _migrationDGVFactory.GenerateMigrationDataTableFromList(_dataSet, _dataTable);
 
             dgv_Repos.DataSource = _dataTable;
+            dgv_Repos.AutoResizeColumns();
         }
 
         private void btn_Clear_Click(object sender, EventArgs e)
@@ -51,7 +53,19 @@ namespace GitTFS_Migration.Application
 
         private void btn_Migrate_Click(object sender, EventArgs e)
         {
-            bool result = _app.MigrateRepositories(_dataSet).Result;
+            try
+            {
+                bool result = _app.MigrateRepositories(_dataSet);
+                MessageBox.Show($"Hath one went baws oot? {result}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                MessageBox.Show("Fin");
+            }
         }
     }
 }

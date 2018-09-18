@@ -1,4 +1,9 @@
-﻿namespace GitTFS_Migration.Domain.DataModels
+﻿using GitTFS_Migration.Domain.Enums;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
+namespace GitTFS_Migration.Domain.DataModels
 {
     public class GitMigrationRow
     {
@@ -14,6 +19,7 @@
                 NewGitRepositoryValid = false;
             }
         }
+
         public string BranchName { get; set; }
 
         public string OldTFSRepository { get; set; }
@@ -25,6 +31,8 @@
         public bool NewGitRepositoryValid { get; set; }
 
         public bool EligableForMigration => OldTFSRepositoryValid && NewGitRepositoryValid;
+
+        public Dictionary<GitTFSCommandsEnum, Process> ProcessDictionary { get; set; }
 
         public bool ValidateRow()
         {

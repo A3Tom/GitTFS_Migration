@@ -38,6 +38,9 @@ namespace GitTFS_Migration.Application
             Bind(typeof(IMigrationDGVFactory)).To(typeof(MigrationDGVFactory))
                 .InTransientScope();
 
+            Bind(typeof(IProcessFactory)).To(typeof(ProcessFactory))
+                .InTransientScope();
+
             #endregion
         }
     }

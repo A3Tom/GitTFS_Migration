@@ -1,69 +1,68 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using GitTFS_Migration.Domain.DataModels;
+﻿using GitTFS_Migration.Domain.DataModels;
 using GitTFS_Migration.Domain.Enums;
 using GitTFS_Migration.Domain.Interfaces;
 using GitTFS_Migration.Service.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GitTFS_Migration.Service.Classes
 {
     public class App : IApp
     {
-        private readonly ICommandLibraryFactory _cmdFactory;
+        private readonly IProcessFactory _processFactory;
 
-        private const string WORKING_DIRECTORY = @"C:\Migrations\";
-
-        public App(ICommandLibraryFactory cmdFactory)
+        public App(IProcessFactory processFactory)
         {
-            _cmdFactory = cmdFactory;
+            _processFactory = processFactory;
         }
 
-        public async Task<bool> MigrateRepositories(IEnumerable<GitMigrationRow> migrationRows)
+        public bool MigrateRepositories(IEnumerable<GitMigrationRow> migrationRows)
         {
-            List<Task<int>> repositoriesToMigrate = new List<Task<int>>();
+            var result = new List<Dictionary<GitTFSCommandsEnum, bool>>();
+            var procs = new List<Process>(); 
 
-            if (!Directory.Exists(WORKING_DIRECTORY))
-                Directory.CreateDirectory(WORKING_DIRECTORY);
-
-            foreach (GitMigrationRow row in migrationRows)
+            foreach (GitMigrationRow row in migrationRows.Where(x => x.EligableForMigration))
             {
-                repositoriesToMigrate.Add(GenerateMigrationTask(row));
+                var procDict = new Dictionary<GitTFSCommandsEnum, bool>();
+
+                var processDictionaryResult = _processFactory.GenerateProcessDictionary(row);
+                row.ProcessDictionary = processDictionaryResult;
+
+                foreach (var proc in row.ProcessDictionary)
+                {
+                    proc.Value.Start();
+
+                    Console.WriteLine(proc.Value.StandardOutput.ReadToEnd());
+
+                    procDict.Add(proc.Key, true);
+                }
+
+                result.Add(procDict);
             }
 
-            int[] result = await Task.WhenAll(repositoriesToMigrate.ToArray());
-
-            return true;
+            return result.All(x => x.All(d => d.Value == true));
         }
 
-        private Task<int> GenerateMigrationTask(GitMigrationRow migrationRow)
+        private async Task<int> RunProcessTask(Process process)
         {
-            var tcs = new TaskCompletionSource<int>();
-            var cmdDictionary = _cmdFactory.GenerateGitTFSCommandDictionary(migrationRow);
-            var argument = "/C ";
-            argument += cmdDictionary[GitTFSCommandsEnum.CloneFromTFS] + "&";
-            argument += cmdDictionary[GitTFSCommandsEnum.ChangeDirectory] + "&";
-            argument += cmdDictionary[GitTFSCommandsEnum.AddOriginRemote] + "&";
-            argument += cmdDictionary[GitTFSCommandsEnum.GenerateDevelopBranch] + "&";
-            argument += cmdDictionary[GitTFSCommandsEnum.PushOriginRemote];
+            return await Task.Run(() => {
+                var tcs = new TaskCompletionSource<int>();
 
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.WorkingDirectory = WORKING_DIRECTORY;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = argument;
-            process.StartInfo = startInfo;
-            process.Exited += (sender, args) =>
-            {
-                tcs.SetResult(process.ExitCode);
-                process.Dispose();
-            };
+                process.Exited += (sender, args) =>
+                {
+                    tcs.SetResult(process.ExitCode);
+                    process.Dispose();
+                };
 
-            process.Start();
+                if (!Directory.Exists(process.StartInfo.WorkingDirectory))
+                    process.Kill();
 
-            return tcs.Task;
+                return tcs.Task;
+            });
         }
     }
 }
