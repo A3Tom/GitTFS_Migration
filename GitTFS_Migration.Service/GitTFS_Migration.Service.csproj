@@ -49,10 +49,12 @@
     <Compile Include="Classes\App.cs" />
     <Compile Include="Classes\FileSelector.cs" />
     <Compile Include="Classes\FileReader.cs" />
+    <Compile Include="Classes\ProcessMarshal.cs" />
     <Compile Include="Classes\RepositoryValidator.cs" />
     <Compile Include="Interfaces\IApp.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IFileSelector.cs" />
+    <Compile Include="Interfaces\IProcessMarshal.cs" />
     <Compile Include="Interfaces\IRepositoryValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

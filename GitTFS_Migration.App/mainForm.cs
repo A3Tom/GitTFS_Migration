@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GitTFS_Migration.Application
@@ -51,12 +52,14 @@ namespace GitTFS_Migration.Application
             dgv_Repos.DataSource = null;
         }
 
-        private void btn_Migrate_Click(object sender, EventArgs e)
+        private async void btn_Migrate_Click(object sender, EventArgs e)
         {
+            var result = false;
+
             try
             {
-                bool result = _app.MigrateRepositories(_dataSet);
-                MessageBox.Show($"Hath one went baws oot? {result}");
+                await _app.MigrateRepositoriesParallelAsync(_dataSet);
+                result = true;
             }
             catch (Exception ex)
             {
@@ -64,7 +67,7 @@ namespace GitTFS_Migration.Application
             }
             finally
             {
-                MessageBox.Show("Fin");
+                MessageBox.Show($"Hath one went baws oot? {result}");
             }
         }
     }

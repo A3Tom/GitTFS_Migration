@@ -23,6 +23,9 @@ namespace GitTFS_Migration.Application
             Bind(typeof(IApp)).To(typeof(App))
                 .InSingletonScope();
 
+            Bind(typeof(ICommandLibraryFactory)).To(typeof(CommandLibraryFactory))
+                .InSingletonScope();
+
             Bind(typeof(IFileSelector)).To(typeof(FileSelector))
                 .InTransientScope();
 
@@ -32,13 +35,13 @@ namespace GitTFS_Migration.Application
             Bind(typeof(IRepositoryValidator)).To(typeof(RepositoryValidator))
                 .InTransientScope();
 
-            Bind(typeof(ICommandLibraryFactory)).To(typeof(CommandLibraryFactory))
-                .InTransientScope();
-
             Bind(typeof(IMigrationDGVFactory)).To(typeof(MigrationDGVFactory))
                 .InTransientScope();
 
             Bind(typeof(IProcessFactory)).To(typeof(ProcessFactory))
+                .InTransientScope();
+
+            Bind(typeof(IProcessMarshal)).To(typeof(ProcessMarshal))
                 .InTransientScope();
 
             #endregion

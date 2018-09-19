@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.5.9\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.10\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -56,6 +56,7 @@
     <Compile Include="DataModels\GitMigrationRow.cs" />
     <Compile Include="Enums\GitTFSCommandsEnum.cs" />
     <Compile Include="Enums\RepositoryTypeEnum.cs" />
+    <Compile Include="Extensions\ParallelProcessExtensions.cs" />
     <Compile Include="Interfaces\ICommandLibraryFactory.cs" />
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Interfaces\IMigrationDGVFactory.cs" />
@@ -63,6 +64,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

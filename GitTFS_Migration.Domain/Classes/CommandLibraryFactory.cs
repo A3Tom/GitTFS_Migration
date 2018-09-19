@@ -26,13 +26,23 @@ namespace GitTFS_Migration.Domain.Classes
                 },
 
                 {
-                    GitTFSCommandsEnum.ChangeDirectory,
-                    $"cd {migrationRow.BranchName}"
+                    GitTFSCommandsEnum.GenerateDevelopBranch,
+                    $"git checkout -b develop"
                 },
 
                 {
-                    GitTFSCommandsEnum.GenerateDevelopBranch,
-                    $"git checkout -b develop"
+                    GitTFSCommandsEnum.GenerateGitIgnore,
+                    @"COPY ""C:\.gitignore\"" "".\"""
+                },
+
+                {
+                    GitTFSCommandsEnum.AddGitIgnoreToRepository,
+                    @"git add ."
+                },
+
+                {
+                    GitTFSCommandsEnum.CommitGitIgnore,
+                    "git commit -m \"Added git ignore\""
                 },
 
                 {

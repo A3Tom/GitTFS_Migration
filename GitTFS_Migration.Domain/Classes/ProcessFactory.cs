@@ -4,7 +4,6 @@ using GitTFS_Migration.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 
 namespace GitTFS_Migration.Domain.Classes
 {
@@ -48,6 +47,7 @@ namespace GitTFS_Migration.Domain.Classes
             startInfo.FileName = "cmd.exe";
             startInfo.Arguments = argument;
             startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
             startInfo.UseShellExecute = false;
 
             process.StartInfo = startInfo;

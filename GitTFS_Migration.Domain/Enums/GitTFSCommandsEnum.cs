@@ -4,8 +4,10 @@
     {
         CloneFromTFS = 1,
         AddOriginRemote = 2,
-        ChangeDirectory = 3,
-        GenerateDevelopBranch = 4,
-        PushOriginRemote = 5
+        GenerateDevelopBranch = 3,
+        GenerateGitIgnore = 4,
+        AddGitIgnoreToRepository = 5,
+        CommitGitIgnore = 6,
+        PushOriginRemote = 7
     }
 }
